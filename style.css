@@ -1,0 +1,53 @@
+/* CSS files add styling rules to your content */
+
+body {
+    font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+    margin: 2em;
+  }
+  
+  h1 {
+    font-style: italic;
+    color: #373fff;
+  }
+  
+  svg {
+    border: dotted 0px;
+    margin: auto;
+    margin-top: 10px;
+    grid-column: 1/ last;
+  }
+  
+  h3 {
+    margin: 0px;
+  }
+  
+  .strength_dots {
+    stroke: #ddd;
+  }
+  
+  .dosage_dots {
+    fill: red;
+  }
+  
+  label {
+    display: inline-block;
+    width: 7ex;
+  }
+  
+  div.visualization {
+    display: grid;
+    width: 600px;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr [last];
+  }
+  
+  div.settings {
+    border: solid 1px;
+    border-radius: 5px;
+    margin: 0px;
+    padding: 1px;
+  }
+  
+  .volume.after_calc {
+  //  stroke: darkblue;
+  }
