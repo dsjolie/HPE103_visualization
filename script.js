@@ -43,146 +43,6 @@ function createDosageVis(container) {
 
     var vis = container.append("div").classed("visualization", true);
 
-    var svg = vis.append("svg");
-    svg.attr("width", "100%");
-    svg.attr("viewBox", "0 0 400 300");
-
-    // Before
-    var before_g0 = svg.append("g")
-        .attr("transform", "translate(0,0)");
-
-    before_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810")
-        .attr("height", "100")
-        .attr("x", "-20");
-
-    var before_g = before_g0.append("g")
-        .attr("transform", "translate(40,0)");
-
-    before_g.append("rect").classed("strength before_calc", true)
-        .attr("width", 100)
-        .attr("height", 100)
-        .attr("rx", 10)
-        .attr("y", 0)
-        .attr("x", 0);
-
-    before_g.append("rect").classed("strength before", true)
-        .attr("width", 80)
-        .attr("height", 80)
-        .attr("x", 10)
-        .attr("y", 10)
-        .attr("rx", 10);
-
-    before_g.append("rect").classed("volume before", true)
-        .attr("width", 40)
-        .attr("x", 30)
-        .attr("fill", "blue");
-
-    before_g.append("rect").classed("dosage before", true)
-        .attr("width", 20)
-        .attr("x", 40)
-        .attr("fill", "red");
-
-
-    // Spading
-    var spadning_g0 = svg.append("g")
-        .attr("transform", "translate(0,120)");
-
-    spadning_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FNatriumklorid-1.jpg?1539073760839")
-        .attr("height", "100")
-        .attr("x", "-20");
-
-    var spadning_g = spadning_g0.append("g")
-        .attr("transform", "translate(40,0)");
-    spadning_g.append("rect").classed("strength spadning", true)
-        .attr("width", 100)
-        .attr("height", 100)
-        .attr("rx", 15)
-        .attr("fill", getDosageColor(0))
-        .attr("x", 0);
-
-    spadning_g.append("rect").classed("volume spadning", true)
-        .attr("width", 40)
-        .attr("x", 30)
-        .attr("fill", "blue");
-
-
-    // After
-    var after_g0 = svg.append("g");
-    after_g0.attr("transform", "translate(200,60)");
-
-    after_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589")
-        .attr("height", "100")
-        .attr("x", "100");
-
-    var after_g = after_g0.append("g");
-    after_g.attr("transform", "translate(0,0)");
-
-    after_g.append("rect").classed("strength after_calc", true)
-        .attr("width", 70)
-        .attr("height", 100)
-        .attr("rx", 10)
-        .attr("x", 0)
-        .attr("y", 0);
-
-    after_g.append("rect").classed("strength after_calc2", true)
-        .attr("width", 70)
-        .attr("height", 100)
-        .attr("rx", 10)
-        .attr("x", 50)
-        .attr("y", 0);
-
-    after_g.append("rect").classed("strength after", true)
-        .attr("width", 100)
-        .attr("height", 80)
-        .attr("x", 10)
-        .attr("y", 10)
-        .attr("rx", 10)
-        .attr("fill", getDosageColor(0));
-
-    after_g.append("rect").classed("volume after", true)
-        .attr("width", 20)
-        .attr("x", 40)
-        .attr("fill", "blue");
-
-    after_g.append("rect").classed("volume after_calc", true)
-        .attr("width", 20)
-        .attr("x", 60)
-        .attr("fill", "blue");
-
-    after_g.append("rect").classed("dosage after", true)
-        .attr("width", 10)
-        .attr("x", 50)
-        .attr("fill", "red");
-
-    after_g.append("rect").classed("dosage after_calc", true)
-        .attr("width", 10)
-        .attr("x", 60)
-        .attr("fill", "red");
-
-
-    after_g.append("line")
-        .attr("x1", 60)
-        .attr("x2", 60)
-        .attr("y1", 100)
-        .attr("y2", 0)
-        .attr("stroke", "white")
-        .attr("stroke-opacity", "0.5");
-
-    svg.append("text")
-        .attr("x", 85)
-        .attr("y", 115)
-        .text("+");
-
-    svg.append("text")
-        .attr("x", 180)
-        .attr("y", 115)
-        .text("=");
-
-    drawDosageVis(svg);
-
     var before = vis.append("div").classed("settings", true);
     before.append("h3").text("Före");
 
@@ -193,9 +53,13 @@ function createDosageVis(container) {
     var spadning = vis.append("div").classed("settings", true);
     spadning.append("h3").text("Spädningsvätska");
 
-    spadning.append("div").append("label").text("Styrka: Inte relevant").style("width", "10ex");
-    spadning.append("div").append("label").text("Dos: Inte relevant").style("width", "10ex");
+    spadning.append("div").append("label").text("Styrka: Inte relevant").style("width", "18ex");
+    spadning.append("div").append("label").text("Dos: Inte relevant").style("width", "16ex");
     createSetting(spadning, "Mängd", "mangd", "spadning");
+
+    buildVisualizationSVG(vis);
+
+    updateDosageVis();
 
     var after = vis.append("div").classed("settings", true);
     after.append("h3").text("Efter");
@@ -204,6 +68,120 @@ function createDosageVis(container) {
     createSetting(after, "Dos", "dos", "after");
     createSetting(after, "Mängd", "mangd", "after");
 
+}
+
+function buildVisualizationSVG(vis) {
+    var svg = vis.append("svg");
+    svg.attr("width", "100%");
+    svg.attr("viewBox", "0 0 400 300");
+
+    // Before
+    var before_g0 = svg.append("g")
+        .attr("transform", "translate(0,0)");
+    before_g0.append("image")
+        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810")
+        .attr("height", "100")
+        .attr("x", "-20");
+    var before_g = before_g0.append("g")
+        .attr("transform", "translate(40,0)");
+    before_g.append("rect").classed("strength before_calc", true)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("y", 0)
+        .attr("x", 0);
+    before_g.append("rect").classed("strength before", true)
+        .attr("width", 80)
+        .attr("height", 80)
+        .attr("x", 10)
+        .attr("y", 10)
+        .attr("rx", 10);
+    before_g.append("rect").classed("volume before", true)
+        .attr("width", 40)
+        .attr("x", 30)
+        .attr("fill", "blue");
+    before_g.append("rect").classed("dosage before", true)
+        .attr("width", 20)
+        .attr("x", 40)
+        .attr("fill", "red");
+    // Spading
+    var spadning_g0 = svg.append("g")
+        .attr("transform", "translate(0,120)");
+    spadning_g0.append("image")
+        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FNatriumklorid-1.jpg?1539073760839")
+        .attr("height", "100")
+        .attr("x", "-20");
+    var spadning_g = spadning_g0.append("g")
+        .attr("transform", "translate(40,0)");
+    spadning_g.append("rect").classed("strength spadning", true)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 15)
+        .attr("fill", getDosageColor(0))
+        .attr("x", 0);
+    spadning_g.append("rect").classed("volume spadning", true)
+        .attr("width", 40)
+        .attr("x", 30)
+        .attr("fill", "blue");
+    // After
+    var after_g0 = svg.append("g");
+    after_g0.attr("transform", "translate(200,60)");
+    after_g0.append("image")
+        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589")
+        .attr("height", "100")
+        .attr("x", "100");
+    var after_g = after_g0.append("g");
+    after_g.attr("transform", "translate(0,0)");
+    after_g.append("rect").classed("strength after_calc", true)
+        .attr("width", 70)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("x", 0)
+        .attr("y", 0);
+    after_g.append("rect").classed("strength after_calc2", true)
+        .attr("width", 70)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("x", 50)
+        .attr("y", 0);
+    after_g.append("rect").classed("strength after", true)
+        .attr("width", 100)
+        .attr("height", 80)
+        .attr("x", 10)
+        .attr("y", 10)
+        .attr("rx", 10)
+        .attr("fill", getDosageColor(0));
+    after_g.append("rect").classed("volume after", true)
+        .attr("width", 20)
+        .attr("x", 40)
+        .attr("fill", "blue");
+    after_g.append("rect").classed("volume after_calc", true)
+        .attr("width", 20)
+        .attr("x", 60)
+        .attr("fill", "blue");
+    after_g.append("rect").classed("dosage after", true)
+        .attr("width", 10)
+        .attr("x", 50)
+        .attr("fill", "red");
+    after_g.append("rect").classed("dosage after_calc", true)
+        .attr("width", 10)
+        .attr("x", 60)
+        .attr("fill", "red");
+    after_g.append("line")
+        .attr("x1", 60)
+        .attr("x2", 60)
+        .attr("y1", 100)
+        .attr("y2", 0)
+        .attr("stroke", "white")
+        .attr("stroke-opacity", "0.5");
+    svg.append("text")
+        .attr("x", 85)
+        .attr("y", 115)
+        .text("+");
+    svg.append("text")
+        .attr("x", 180)
+        .attr("y", 115)
+        .text("=");
 }
 
 function createSetting(vis, label, key, key2) {
@@ -217,14 +195,14 @@ function createSetting(vis, label, key, key2) {
         .attr("value", d => d[key]).attr("size", 3)
         .on("change", function (d) {
             d[key] = +this.value;
-            drawDosageVis();
+            updateDosageVis();
             d3.select(this.parentNode).selectAll("input").nodes().forEach(function (n) { n.value = d[key]; })
         });
     setting.append("input").attr("type", "range")
         .attr("value", d => d[key]).style("width", "80px").attr("max", function (d) { return d[max_key]; }).attr("min", 0)
         .on("input", function (d) {
             d[key] = +this.value;
-            drawDosageVis();
+            updateDosageVis();
             d3.select(this.parentNode).selectAll("input").nodes().forEach(function (n) { n.value = d[key]; })
         });
 }
@@ -236,7 +214,7 @@ function getDosageColor(styrka) {
     return rgb(base + s, base, base + sscale)
 }
 
-function drawDosageVis(styrka, dos, mangd) {
+function updateDosageVis() {
 
     var svg = d3.selectAll("svg");
 
@@ -299,9 +277,6 @@ function drawDosageVis(styrka, dos, mangd) {
             return 50 * Math.min(d.dos / d.max_dos, 1);
         })
         .attr("y", function (d) { return 100 - 50 * Math.min(d.dos / d.max_dos, 1); });
-
-    //  svg.selectAll("line")
-    //    .attr("y2", function (d) { return d.max_mangd; } );
 
 }
 

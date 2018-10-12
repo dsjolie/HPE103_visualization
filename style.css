@@ -13,8 +13,20 @@ h1 {
 svg {
     border: dotted 0px;
     margin: auto;
-    margin-top: 10px;
-    grid-column: 1/ last;
+    grid-column: 2;
+    grid-row: 1 / 6;
+}
+
+.settings:nth-of-type(1) {
+    grid-row: 1 / 3;
+}
+
+.settings:nth-of-type(2) {
+    grid-row: 3 / 5;
+}
+
+.settings:nth-of-type(3) {
+    grid-row: 2 / 4;
 }
 
 h3 {
@@ -36,9 +48,9 @@ label {
 
 div.visualization {
     display: grid;
-    width: 600px;
+    width: 1000px;
     grid-gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr [last];
+    grid-template-columns: 1fr 4fr 1fr [last];
 }
 
 div.settings {
