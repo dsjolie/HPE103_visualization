@@ -37,9 +37,12 @@ vis.append("input").attr("type", "text").attr("value", function (d) { return d.m
 var width = 400;
 var height = 300;
 
+const volume_color = "hsl(220,100%,50%)";
+const dosage_color = "hsl(360,100%,50%)";
+
 createDosageVis(vis);
 
-setInterval(doAnimations,33);
+setInterval(doAnimations, 33);
 
 function createDosageVis(container) {
 
@@ -91,96 +94,159 @@ function buildVisualizationSVG(vis) {
         .attr("y1", 48)
         .attr("y2", 48)
         .attr("stroke", "black");
+    before_g0.append("text")
+        .attr("x", 20)
+        .attr("y", 45)
+        .style("font-size", "1ex")
+        .text("10 ml");
+
 
     var before_g = before_g0.append("g")
         .attr("transform", "translate(20,0)");
     before_g.append("rect").classed("strength before_calc", true)
-        .attr("width", 140)
+        .attr("width", 70)
         .attr("height", 20)
         .attr("x", 20)
         .attr("y", 80);
     before_g.append("rect").classed("strength before", true)
-        .attr("width", 140)
+        .attr("width", 70)
         .attr("height", 10)
         .attr("x", 20)
         .attr("y", 85);
     before_g.append("rect").classed("volume before", true)
         .attr("width", 20)
         .attr("x", 0)
-        .attr("fill", "blue");
+        .attr("fill", volume_color);
     before_g.append("rect").classed("dosage before", true)
         .attr("width", 10)
         .attr("x", 5)
         .attr("fill", "red");
     // Spading
     var spadning_g0 = svg.append("g")
-        .attr("transform", "translate(0,120)");
+        .attr("transform", "translate(0,110)");
     spadning_g0.append("image")
         .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FNatriumklorid-1.jpg?1539073760839")
         .attr("height", "100")
-        .attr("x", "-20");
+        .attr("x", "-20")
+        .attr("y", "8");
+    spadning_g0.append("line")
+        .attr("x1", 0)
+        .attr("x2", 80)
+        .attr("y1", 48)
+        .attr("y2", 48)
+        .attr("stroke", "black");
+    spadning_g0.append("text")
+        .attr("x", 50)
+        .attr("y", 45)
+        .style("font-size", "1ex")
+        .text("100 ml");
+
     var spadning_g = spadning_g0.append("g")
         .attr("transform", "translate(10,0)");
     spadning_g.append("rect").classed("strength spadning", true)
-        .attr("width", 100)
+        .attr("width", 50)
         .attr("height", 20)
         .attr("fill", getDosageColor(0))
-        .attr("x", 70);
+        .attr("x", 70)
+        .attr("y", 80);
     spadning_g.append("rect").classed("volume spadning", true)
         .attr("width", 40)
         .attr("x", 30)
-        .attr("fill", "blue");
+        .attr("fill", volume_color);
     // After
     var after_g0 = svg.append("g");
     after_g0.attr("transform", "translate(200,60)");
     after_g0.append("image")
         .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589")
         .attr("height", "100")
-        .attr("x", "100");
+        .attr("x", "20");
     var after_g = after_g0.append("g");
     after_g.attr("transform", "translate(0,0)");
     after_g.append("rect").classed("strength after_calc", true)
-        .attr("width", 70)
-        .attr("height", 100)
-        .attr("rx", 10)
-        .attr("x", 0)
-        .attr("y", 0);
-    after_g.append("rect").classed("strength after_calc2", true)
-        .attr("width", 70)
-        .attr("height", 100)
-        .attr("rx", 10)
-        .attr("x", 50)
-        .attr("y", 0);
+        .attr("width", 50)
+        .attr("height", 20)
+        .attr("x", -50)
+        .attr("y", 80);
+    after_g.append("rect").classed("strength after_calc_from_before", true)
+        .attr("width", 20)
+        .attr("height", 130)
+        .attr("x", -70)
+        .attr("y", 20);
     after_g.append("rect").classed("strength after", true)
-        .attr("width", 100)
-        .attr("height", 80)
-        .attr("x", 10)
-        .attr("y", 10)
-        .attr("rx", 10)
+        .attr("width", 50)
+        .attr("height", 10)
+        .attr("x", -50)
+        .attr("y", 85)
         .attr("fill", getDosageColor(0));
     after_g.append("rect").classed("volume after", true)
-        .attr("width", 20)
-        .attr("x", 40)
-        .attr("fill", "blue");
-    after_g.append("rect").classed("volume after_calc", true)
-        .attr("width", 20)
-        .attr("x", 60)
-        .attr("fill", "blue");
+        .attr("width", 40)
+        .attr("x", 0)
+        .attr("fill", volume_color);
     after_g.append("rect").classed("dosage after", true)
         .attr("width", 10)
-        .attr("x", 50)
+        .attr("x", 15)
         .attr("fill", "red");
+
+    after_g.append("rect").classed("volume after_calc", true)
+        .attr("width", 40)
+        .attr("x", 0)
+        .attr("fill", "none")
+        .attr("stroke", "black");
     after_g.append("rect").classed("dosage after_calc", true)
         .attr("width", 10)
-        .attr("x", 60)
-        .attr("fill", "red");
-    after_g.append("line")
-        .attr("x1", 60)
-        .attr("x2", 60)
-        .attr("y1", 100)
-        .attr("y2", 0)
-        .attr("stroke", "white")
-        .attr("stroke-opacity", "0.5");
+        .attr("x", 15)
+        .attr("fill", "none")
+        .attr("stroke", "black");
+
+    var guides = svg.append("g");
+
+    guides.append("text")
+        .attr("x", 150)
+        .attr("y", 20)
+        .style("font-size", "1ex")
+        .text("Angiven och uträknad styrka skall vara samma");
+
+    guides.append("line")
+        .attr("x1", 160)
+        .attr("x2", 95)
+        .attr("y1", 25)
+        .attr("y2", 74)
+        .attr("stroke", "black");
+
+    guides.append("circle")
+        .attr("cx", 95)
+        .attr("cy", 90)
+        .attr("r", 16)
+        .attr("fill", "none")
+        .attr("stroke", "black");
+
+    guides.append("line")
+        .attr("x1", 160)
+        .attr("x2", 175)
+        .attr("y1", 25)
+        .attr("y2", 134)
+        .attr("stroke", "black");
+
+    guides.append("circle")
+        .attr("cx", 175)
+        .attr("cy", 150)
+        .attr("r", 16)
+        .attr("fill", "none")
+        .attr("stroke", "black");
+
+    guides.append("text")
+        .attr("x", 160)
+        .attr("y", 190)
+        .style("font-size", "1ex")
+        .text("Staplarna för volym och dos skall matcha de svarta ramarna");
+
+    guides.append("line")
+        .attr("x1", 270)
+        .attr("x2", 245)
+        .attr("y1", 180)
+        .attr("y2", 150)
+        .attr("stroke", "black");
+
 }
 
 function createSetting(vis, label, key, key2) {
@@ -207,10 +273,11 @@ function createSetting(vis, label, key, key2) {
 }
 
 function getDosageColor(styrka) {
-    const base = 105;
+    const base = 80;
     const sscale = 150;
     var s = sscale * Math.min(styrka, 1);
-    return rgb(base + s, base, base + sscale)
+    //return rgb(base + s, base, base + sscale);
+    return "hsl(" + (200 + 140 * Math.min(styrka, 1)) + ",100%,70%)";
 }
 
 function updateDosageVis() {
@@ -250,7 +317,7 @@ function updateDosageVis() {
     svg.selectAll(".strength.after_calc")
         .attr("fill", function (d) { return getDosageColor(d.dos_after / d.mangd_after / d.max_styrka); });
 
-    svg.selectAll(".strength.after_calc2")
+    svg.selectAll(".strength.after_calc_from_before")
         .attr("fill", function (d) { return getDosageColor(d.dos / (d.mangd + d.mangd_spadning) / d.max_styrka); });
 
     svg.selectAll(".volume.after")
@@ -279,19 +346,21 @@ function updateDosageVis() {
 
 }
 
-function doAnimations()
-{
+function doAnimations() {
     var svg = d3.selectAll("svg");
 
-    var pos = Math.sin(5*window.performance.now()/1000);
-    var amp = 6;
-    var max_height=20;
-    var padding=2;
+    var pos = Math.sin(5 * window.performance.now() / 1000);
+    var amp = 1;
+    var max_height = 20;
+    var padding = 4;
     var base_y = 80;
     // Before
     var str_bg = svg.selectAll(".strength.before")
-        .attr("height", function (d) { return max_height-amp*(pos+1)-2*padding; }) // pos+1 : -1 - 1 => 0 - 2
-        .attr("y", function (d) { return base_y+padding+amp*(pos+1)*0.5; });
+        .attr("height", function (d) { return max_height - amp * (pos + 1) - 2 * padding; }) // pos+1 : -1 - 1 => 0 - 2
+        .attr("y", function (d) { return base_y + padding + amp * (pos + 1) * 0.5; });
+    var str_bg = svg.selectAll(".strength.after")
+        .attr("height", function (d) { return max_height - amp * (pos + 1) - 2 * padding; }) // pos+1 : -1 - 1 => 0 - 2
+        .attr("y", function (d) { return base_y + padding + amp * (pos + 1) * 0.5; });
 }
 
 function rgb(r, g, b) {
