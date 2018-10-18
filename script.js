@@ -245,6 +245,7 @@ function buildVisualizationSVG(vis) {
         .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589")
         .attr("height", "100")
         .attr("x", "20");
+
     var after_g = after_g0.append("g");
     after_g.attr("transform", "translate(0,0)");
     after_g.append("rect").classed("strength after_calc", true)
@@ -282,6 +283,18 @@ function buildVisualizationSVG(vis) {
         .attr("x", 15)
         .attr("fill", "none")
         .attr("stroke", "black");
+
+    after_g0.append("line")
+        .attr("x1", 0)
+        .attr("x2", 80)
+        .attr("y1", 20)
+        .attr("y2", 20)
+        .attr("stroke", "black");
+    after_g0.append("text").classed("max_label", true).attr("max_key", "max_mangd_spadning")
+        .attr("x", 50)
+        .attr("y", 15)
+        .style("font-size", "1ex")
+        .text("? ml");
 
     var guides = svg.append("g");
 
