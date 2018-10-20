@@ -2,22 +2,22 @@ const before_containers = [
     {
         "label": "ampull 5 ml",
         "volume": 5,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Ampull-4.jpg"
     },
     {
         "label": "ampull 10 ml",
         "volume": 10,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Ampull-4.jpg"
     },
     {
         "label": "injektionsflaska 15 ml",
         "volume": 15,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Ampull-14.jpg"
     },
     {
         "label": "injektionsflaska 45 ml",
         "volume": 45,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Ampull-14.jpg"
     }
 ]
 
@@ -25,22 +25,22 @@ const spadning_containers = [
     {
         "label": "behållare 10 ml",
         "volume": 10,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Natriumklorid-10ml.jpg"
     },
     {
         "label": "behållare 20 ml",
         "volume": 20,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Natriumklorid-10ml.jpg"
     },
     {
         "label": "flaska 100 ml",
         "volume": 100,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/Natriumklorid-10ml.jpg"
     },
     {
         "label": "påse 500 ml",
         "volume": 500,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/bag.jpg"
     }
 ]
 
@@ -48,22 +48,22 @@ const after_containers = [
     {
         "label": "spruta 10 ml",
         "volume": 10,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589"
+        "image": "images/Spruta-10ml.jpg"
     },
     {
         "label": "spruta 20 ml",
         "volume": 20,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589"
+        "image": "images/Spruta-20ml.jpg"
     },
     {
         "label": "spruta 40 ml",
         "volume": 40,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589"
+        "image": "images/Spruta-20ml.jpg"
     },
     {
         "label": "påse 500 ml",
         "volume": 500,
-        "image": "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810"
+        "image": "images/bag.jpg"
     }
 ]
 
@@ -83,6 +83,9 @@ var vis = d3.selectAll(".spad_vis")
             styrka_after: +this.getAttribute("max_styrka") * 0.2,
             dos_after: +this.getAttribute("max_dos") * 0.4,
             mangd_after: +this.getAttribute("max_mangd") * 0.8,
+            before_image: "images/Ampull-4.jpg",
+            spadning_image: "images/Natriumklorid-10ml.jpg",
+            after_image: "images/Spruta-20ml.jpg"
         };
     });
 
@@ -108,6 +111,7 @@ function createDosageVis(container) {
         .on("change", function (d) {
             d.max_mangd_fore = +this.value;
             d.mangd_fore = Math.min(d.max_mangd_fore, d.mangd_fore);
+            d.before_image = before_containers[this.selectedIndex].image;
             updateDosageVis();
         })
         .selectAll("option").data(before_containers).enter()
@@ -126,6 +130,7 @@ function createDosageVis(container) {
         .on("change", function (d) {
             d.max_mangd_spadning = +this.value;
             d.mangd_spadning = Math.min(d.max_mangd_spadning, d.mangd_spadning);
+            d.spadning_image = spadning_containers[this.selectedIndex].image;
             updateDosageVis();
         })
         .selectAll("option").data(spadning_containers).enter()
@@ -146,6 +151,7 @@ function createDosageVis(container) {
         .on("change", function (d) {
             d.max_mangd_after = +this.value;
             d.mangd_after = Math.min(d.max_mangd_after, d.mangd_after);
+            d.after_image = after_containers[this.selectedIndex].image;
             updateDosageVis();
         })
         .selectAll("option").data(d => after_containers.map(function (c) { c.max_mangd_after = d.max_mangd_after; return c; })).enter()
@@ -167,8 +173,8 @@ function buildVisualizationSVG(vis) {
     // Before
     var before_g0 = svg.append("g")
         .attr("transform", "translate(20,0)");
-    before_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FAmpull-4.jpg?1539073731810")
+    before_g0.append("image").classed("before",true)
+        .attr("href", d => d.before_image)
         .attr("height", "100")
         .attr("x", "-30")
         .attr("y", "7");
@@ -209,8 +215,8 @@ function buildVisualizationSVG(vis) {
     // Spading
     var spadning_g0 = svg.append("g")
         .attr("transform", "translate(0,110)");
-    spadning_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FNatriumklorid-1.jpg?1539073760839")
+    spadning_g0.append("image").classed("spadning",true)
+        .attr("href", d => d.spadning_image)
         .attr("height", "120")
         .attr("x", "-20")
         .attr("y", "-10");
@@ -241,8 +247,8 @@ function buildVisualizationSVG(vis) {
     // After
     var after_g0 = svg.append("g");
     after_g0.attr("transform", "translate(200,60)");
-    after_g0.append("image")
-        .attr("href", "https://cdn.glitch.com/d2a63701-a576-4584-9ecd-f00c9d5f4529%2FSpruta-5.jpg?1539073792589")
+    after_g0.append("image").classed("after",true)
+        .attr("href", d => d.after_image)
         .attr("height", "100")
         .attr("x", "20");
 
@@ -382,9 +388,13 @@ function getDosageColor(styrka) {
 
 function updateDosageVis() {
 
-    var settings = d3.selectAll(".max_slider").attr("max", function (d) { return d[this.getAttribute("max_key")]; });
-    var settings = d3.selectAll(".max_text").each(function (d) { this.value = Math.min(+this.value, d[this.getAttribute("max_key")]); });
-    var settings = d3.selectAll(".max_label").text(function (d) { return d[this.getAttribute("max_key")] + " ml"; });
+    d3.selectAll(".max_slider").attr("max", function (d) { return d[this.getAttribute("max_key")]; });
+    d3.selectAll(".max_text").each(function (d) { this.value = Math.min(+this.value, d[this.getAttribute("max_key")]); });
+    d3.selectAll(".max_label").text(function (d) { return d[this.getAttribute("max_key")] + " ml"; });
+
+    d3.selectAll("image.before").attr("href", function (d) { return d.before_image; } );
+    d3.selectAll("image.spadning").attr("href", function (d) { return d.spadning_image; } );
+    d3.selectAll("image.after").attr("href", function (d) { return d.after_image; } );
 
     var svg = d3.selectAll("svg");
 
