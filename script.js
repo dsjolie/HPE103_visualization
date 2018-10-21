@@ -73,16 +73,16 @@ var vis = d3.selectAll(".spad_vis")
             max_styrka: +this.getAttribute("max_styrka"),
             max_dos: +this.getAttribute("max_dos"),
             max_mangd: +this.getAttribute("max_mangd"),
-            max_mangd_fore: +this.getAttribute("max_mangd"),
-            max_mangd_spadning: +this.getAttribute("max_mangd") * 2,
-            max_mangd_after: +100,
+            max_mangd_fore: 5,
+            max_mangd_spadning: 10,
+            max_mangd_after: 10,
             styrka: +this.getAttribute("max_styrka") * 0.4,
             dos: +this.getAttribute("max_dos") * 0.4,
-            mangd_fore: +this.getAttribute("max_mangd") * 0.4,
-            mangd_spadning: +this.getAttribute("max_mangd") * 0.4,
+            mangd_fore: 2,
+            mangd_spadning: 4,
             styrka_after: +this.getAttribute("max_styrka") * 0.2,
             dos_after: +this.getAttribute("max_dos") * 0.4,
-            mangd_after: +this.getAttribute("max_mangd") * 0.8,
+            mangd_after: 6,
             before_image: "images/Ampull-4.jpg",
             spadning_image: "images/Natriumklorid-10ml.jpg",
             after_image: "images/Spruta-20ml.jpg"
@@ -176,17 +176,17 @@ function buildVisualizationSVG(vis) {
     before_g0.append("image").classed("before",true)
         .attr("href", d => d.before_image)
         .attr("height", "100")
-        .attr("x", "-30")
-        .attr("y", "7");
+        .attr("x", "-10")
+        .attr("y", "0");
     before_g0.append("line")
         .attr("x1", 0)
-        .attr("x2", 40)
-        .attr("y1", 45)
-        .attr("y2", 45)
+        .attr("x2", 60)
+        .attr("y1", 41)
+        .attr("y2", 41)
         .attr("stroke", "black");
     before_g0.append("text").classed("max_label", true).attr("max_key", "max_mangd_fore")
-        .attr("x", 20)
-        .attr("y", 42)
+        .attr("x", 40)
+        .attr("y", 39)
         .style("font-size", "1ex")
         .text("10 ml");
 
@@ -217,9 +217,9 @@ function buildVisualizationSVG(vis) {
         .attr("transform", "translate(0,110)");
     spadning_g0.append("image").classed("spadning",true)
         .attr("href", d => d.spadning_image)
-        .attr("height", "120")
-        .attr("x", "-20")
-        .attr("y", "-10");
+        .attr("height", "110")
+        .attr("x", "0")
+        .attr("y", "-8");
     spadning_g0.append("line")
         .attr("x1", 0)
         .attr("x2", 80)
@@ -250,7 +250,7 @@ function buildVisualizationSVG(vis) {
     after_g0.append("image").classed("after",true)
         .attr("href", d => d.after_image)
         .attr("height", "100")
-        .attr("x", "20");
+        .attr("x", "40");
 
     var after_g = after_g0.append("g");
     after_g.attr("transform", "translate(0,0)");
@@ -296,8 +296,8 @@ function buildVisualizationSVG(vis) {
         .attr("y1", 20)
         .attr("y2", 20)
         .attr("stroke", "black");
-    after_g0.append("text").classed("max_label", true).attr("max_key", "max_mangd_spadning")
-        .attr("x", 50)
+    after_g0.append("text").classed("max_label", true).attr("max_key", "max_mangd_after")
+        .attr("x", 0)
         .attr("y", 15)
         .style("font-size", "1ex")
         .text("? ml");
@@ -399,6 +399,7 @@ function updateDosageVis() {
     var svg = d3.selectAll("svg");
 
     // Before
+    const before_bar_max_height = 60;
     var str_bg = svg.selectAll(".strength.before")
         .attr("fill", function (d) { return getDosageColor(d.styrka / d.max_styrka); });
 
@@ -407,9 +408,9 @@ function updateDosageVis() {
 
     var vol_bar = svg.selectAll(".volume.before")
         .attr("height", function (d) {
-            return 55 * Math.min(d.mangd_fore / d.max_mangd_fore, 1);
+            return before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1);
         })
-        .attr("y", function (d) { return 100 - 55 * Math.min(d.mangd_fore / d.max_mangd_fore, 1); });
+        .attr("y", function (d) { return 100 - before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1); });
 
     var dos_bar = svg.selectAll(".dosage.before")
         .attr("height", function (d) {
@@ -426,6 +427,7 @@ function updateDosageVis() {
         .attr("y", function (d) { return 100 - spadning_bar_max_height * Math.min(d.mangd_spadning / d.max_mangd_spadning, 1); });
 
     // After
+    const after_bar_max_height = 80;
     svg.selectAll(".strength.after")
         .attr("fill", function (d) { return getDosageColor(d.styrka_after / d.max_styrka); });
 
@@ -437,15 +439,15 @@ function updateDosageVis() {
 
     svg.selectAll(".volume.after")
         .attr("height", function (d) {
-            return 90 * Math.min(d.mangd_after / d.max_mangd_after, 1);
+            return after_bar_max_height * Math.min(d.mangd_after / d.max_mangd_after, 1);
         })
-        .attr("y", function (d) { return 100 - 90 * Math.min(d.mangd_after / d.max_mangd_after, 1); });
+        .attr("y", function (d) { return 100 - after_bar_max_height * Math.min(d.mangd_after / d.max_mangd_after, 1); });
 
     svg.selectAll(".volume.after_calc")
         .attr("height", function (d) {
-            return 90 * (d.mangd_fore + d.mangd_spadning) / d.max_mangd_after;
+            return after_bar_max_height * (d.mangd_fore + d.mangd_spadning) / d.max_mangd_after;
         })
-        .attr("y", function (d) { return 100 - 90 * (d.mangd_fore + d.mangd_spadning) / d.max_mangd_after; });
+        .attr("y", function (d) { return 100 - after_bar_max_height * (d.mangd_fore + d.mangd_spadning) / d.max_mangd_after; });
 
     svg.selectAll(".dosage.after")
         .attr("height", function (d) {
