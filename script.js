@@ -161,6 +161,11 @@ function createDosageVis(container) {
     createSetting(after, "Dos", "dos", "after");
     createSetting(after, "Mängd", "mangd_after");
 
+    vis.append("button").text("Visa/göm hjälp")
+        .on("click", function () {
+            d3.selectAll(".guides").style("visibility", function () { return this.style["visibility"] == "hidden" ? "visible" : "hidden"; });
+        });
+
     updateDosageVis();
 
 }
@@ -303,7 +308,7 @@ function buildVisualizationSVG(vis) {
         .style("font-size", "1ex")
         .text("? ml");
 
-    var guides = svg.append("g");
+    var guides = svg.append("g").classed("guides",true);
 
     appendMultilineText(guides, ["Styrka Före", "Inmatad av dig"], 62, 52);
     guides.append("line")
