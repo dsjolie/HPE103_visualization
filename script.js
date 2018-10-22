@@ -89,7 +89,7 @@ var vis = d3.selectAll(".spad_vis")
         };
     });
 
-var width = 400;
+var width = 370;
 var height = 300;
 
 const volume_color = "hsl(220,100%,50%)";
@@ -168,7 +168,7 @@ function createDosageVis(container) {
 function buildVisualizationSVG(vis) {
     var svg = vis.append("svg");
     svg.attr("width", "100%");
-    svg.attr("viewBox", "0 0 400 300");
+    svg.attr("viewBox", "0 0 370 300");
 
 
     // Before
@@ -313,11 +313,11 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 90)
         .attr("stroke", "black");
 
-    appendMultilineText(guides, ["Styrka Före", "Automatiskt uträknad"], 45, 122);
+    appendMultilineText(guides, ["Styrka Före", "Automatiskt uträknad","baserat på Dos/Mängd Före"], 45, 117);
     guides.append("line")
-        .attr("x1", 80)
+        .attr("x1", 78)
         .attr("x2", 85)
-        .attr("y1", 115)
+        .attr("y1", 110)
         .attr("y2", 98)
         .attr("stroke", "black");
 
