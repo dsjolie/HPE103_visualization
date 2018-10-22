@@ -35,7 +35,7 @@ const spadning_containers = [
     {
         "label": "flaska 100 ml",
         "volume": 100,
-        "image": "images/Natriumklorid-10ml.jpg"
+        "image": "images/bottle.jpg"
     },
     {
         "label": "påse 500 ml",
@@ -169,6 +169,7 @@ function buildVisualizationSVG(vis) {
     var svg = vis.append("svg");
     svg.attr("width", "100%");
     svg.attr("viewBox", "0 0 400 300");
+
 
     // Before
     var before_g0 = svg.append("g")
@@ -377,6 +378,55 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 150)
         .attr("stroke", "black");
 
+    var strength_gradient = svg.append("defs").append("linearGradient")
+        .attr("id", "strength_gradient")
+        .attr("x1", "0%")
+        .attr("x2", "0%")
+        .attr("y1", "0%")
+        .attr("y2", "100%");
+    strength_gradient.append("stop")
+        .attr("offset", "0%")
+        .attr("style", "stop-color:hsl(340,100%,70%);stop-opacity:1");
+    strength_gradient.append("stop")
+        .attr("offset", "100%")
+        .attr("style", "stop-color:hsl(200,100%,70%);stop-opacity:1");
+
+    var strength_legend = svg.append("g")
+        .attr("transform", "translate(300,30)");
+
+    strength_legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 20)
+        .attr("height", 150)
+        .attr("fill", "url(#strength_gradient");
+
+        strength_legend.append("text")
+        .attr("x", 22)
+        .attr("y", 10)
+        .style("font-size", "1ex")
+        .text(d => "Styrka: " + d.max_styrka);
+
+        strength_legend.append("line")
+        .attr("x1", 0)
+        .attr("x2", 60)
+        .attr("y1", 0)
+        .attr("y2", 0)
+        .attr("stroke", "black");
+
+        strength_legend.append("text")
+        .attr("x", 22)
+        .attr("y", 147)
+        .style("font-size", "1ex")
+        .text("Styrka: 0");
+
+        strength_legend.append("line")
+        .attr("x1", 0)
+        .attr("x2", 60)
+        .attr("y1", 150)
+        .attr("y2", 150)
+        .attr("stroke", "black");
+        
 }
 
 function createSetting(vis, label, key, key2) {

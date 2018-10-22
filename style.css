@@ -59,3 +59,7 @@ div.settings {
     margin: 0px;
     padding: 1px;
 }
+
+img {
+    height: 100px;
+}
