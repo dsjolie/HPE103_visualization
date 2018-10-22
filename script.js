@@ -305,25 +305,15 @@ function buildVisualizationSVG(vis) {
 
     var guides = svg.append("g");
 
-    guides.append("text")
-        .attr("x", 40)
-        .attr("y", 60)
-        .style("font-size", "1ex")
-        .text("Angiven styrka Före");
-
+    appendMultilineText(guides, ["Styrka Före", "Inmatad av dig"], 62, 52);
     guides.append("line")
-        .attr("x1", 70)
+        .attr("x1", 80)
         .attr("x2", 75)
-        .attr("y1", 62)
+        .attr("y1", 65)
         .attr("y2", 90)
         .attr("stroke", "black");
 
-    guides.append("text")
-        .attr("x", 50)
-        .attr("y", 125)
-        .style("font-size", "1ex")
-        .text("Uträknad styrka Före");
-
+    appendMultilineText(guides, ["Styrka Före", "Automatiskt uträknad"], 45, 122);
     guides.append("line")
         .attr("x1", 80)
         .attr("x2", 85)
@@ -331,16 +321,43 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 98)
         .attr("stroke", "black");
 
-    guides.append("text")
-        .attr("x", 150)
-        .attr("y", 20)
-        .style("font-size", "1ex")
-        .text("Angiven och uträknad styrka skall vara samma");
+    appendMultilineText(guides, ["Styrka Efter", "Automatiskt uträknad baserat på Före och Spädning"], 125, 230);
+    guides.append("line")
+        .attr("x1", 150)
+        .attr("x2", 140)
+        .attr("y1", 220)
+        .attr("y2", 200)
+        .attr("stroke", "black");
 
+    appendMultilineText(guides, ["Styrka Efter", "Inmatad av dig"], 170, 96);
+    guides.append("line")
+        .attr("x1", 190)
+        .attr("x2", 180)
+        .attr("y1", 110)
+        .attr("y2", 150)
+        .attr("stroke", "black");
+
+    appendMultilineText(guides, ["Styrka Efter", "Automatisk uträknad", "baserat på Dos/Mängd Efter"], 160, 180);
+    guides.append("line")
+        .attr("x1", 185)
+        .attr("x2", 180)
+        .attr("y1", 172)
+        .attr("y2", 158)
+        .attr("stroke", "black");
+
+    appendMultilineText(guides, ["Automatiskt uträknad Styrka och Styrka Inmatad av dig", "skall vara samma (samma färg)"], 120, 10);
     guides.append("line")
         .attr("x1", 160)
         .attr("x2", 110)
         .attr("y1", 25)
+        .attr("y2", 74)
+        .attr("stroke", "black");
+
+    appendMultilineText(guides, ["Blå stapel visar mängd", "Röd stapel visar dos"], 40, 10);
+    guides.append("line")
+        .attr("x1", 55)
+        .attr("x2", 50)
+        .attr("y1", 22)
         .attr("y2", 74)
         .attr("stroke", "black");
 
@@ -365,17 +382,12 @@ function buildVisualizationSVG(vis) {
         .attr("fill", "none")
         .attr("stroke", "black");
 
-    guides.append("text")
-        .attr("x", 160)
-        .attr("y", 190)
-        .style("font-size", "1ex")
-        .text("Staplarna för volym och dos skall matcha de svarta ramarna");
-
+    appendMultilineText(guides, ["Staplarna för volym och dos skall", "matcha de svarta ramarna"], 240, 215);
     guides.append("line")
-        .attr("x1", 270)
-        .attr("x2", 245)
-        .attr("y1", 180)
-        .attr("y2", 150)
+        .attr("x1", 280)
+        .attr("x2", 240)
+        .attr("y1", 205)
+        .attr("y2", 163)
         .attr("stroke", "black");
 
     var strength_gradient = svg.append("defs").append("linearGradient")
@@ -401,32 +413,32 @@ function buildVisualizationSVG(vis) {
         .attr("height", 150)
         .attr("fill", "url(#strength_gradient");
 
-        strength_legend.append("text")
+    strength_legend.append("text")
         .attr("x", 22)
         .attr("y", 10)
         .style("font-size", "1ex")
         .text(d => "Styrka: " + d.max_styrka);
 
-        strength_legend.append("line")
+    strength_legend.append("line")
         .attr("x1", 0)
         .attr("x2", 60)
         .attr("y1", 0)
         .attr("y2", 0)
         .attr("stroke", "black");
 
-        strength_legend.append("text")
+    strength_legend.append("text")
         .attr("x", 22)
         .attr("y", 147)
         .style("font-size", "1ex")
         .text("Styrka: 0");
 
-        strength_legend.append("line")
+    strength_legend.append("line")
         .attr("x1", 0)
         .attr("x2", 60)
         .attr("y1", 150)
         .attr("y2", 150)
         .attr("stroke", "black");
-        
+
 }
 
 function createSetting(vis, label, key, key2) {
@@ -558,4 +570,16 @@ function doAnimations() {
 
 function rgb(r, g, b) {
     return "rgb(" + r + "," + g + "," + b + ")";
+}
+
+function appendMultilineText(svg, text_lines, x, y) {
+
+    var g = svg.append("g")
+        .attr("transform", "translate(" + x + "," + y + ")");
+    g.selectAll("text").data(text_lines).enter()
+        .append("text")
+        .attr("x", 0)
+        .attr("y", function (d, i) { return i * 8; })
+        .style("font-size", "0.8ex")
+        .text(d => d);
 }
