@@ -173,7 +173,7 @@ function buildVisualizationSVG(vis) {
     // Before
     var before_g0 = svg.append("g")
         .attr("transform", "translate(20,0)");
-    before_g0.append("image").classed("before",true)
+    before_g0.append("image").classed("before", true)
         .attr("href", d => d.before_image)
         .attr("height", "100")
         .attr("x", "-10")
@@ -215,7 +215,7 @@ function buildVisualizationSVG(vis) {
     // Spading
     var spadning_g0 = svg.append("g")
         .attr("transform", "translate(0,110)");
-    spadning_g0.append("image").classed("spadning",true)
+    spadning_g0.append("image").classed("spadning", true)
         .attr("href", d => d.spadning_image)
         .attr("height", "110")
         .attr("x", "0")
@@ -247,7 +247,7 @@ function buildVisualizationSVG(vis) {
     // After
     var after_g0 = svg.append("g");
     after_g0.attr("transform", "translate(200,60)");
-    after_g0.append("image").classed("after",true)
+    after_g0.append("image").classed("after", true)
         .attr("href", d => d.after_image)
         .attr("height", "100")
         .attr("x", "40");
@@ -305,6 +305,32 @@ function buildVisualizationSVG(vis) {
     var guides = svg.append("g");
 
     guides.append("text")
+        .attr("x", 40)
+        .attr("y", 60)
+        .style("font-size", "1ex")
+        .text("Angiven styrka Före");
+
+    guides.append("line")
+        .attr("x1", 70)
+        .attr("x2", 75)
+        .attr("y1", 62)
+        .attr("y2", 90)
+        .attr("stroke", "black");
+
+    guides.append("text")
+        .attr("x", 50)
+        .attr("y", 125)
+        .style("font-size", "1ex")
+        .text("Uträknad styrka Före");
+
+    guides.append("line")
+        .attr("x1", 80)
+        .attr("x2", 85)
+        .attr("y1", 115)
+        .attr("y2", 98)
+        .attr("stroke", "black");
+
+    guides.append("text")
         .attr("x", 150)
         .attr("y", 20)
         .style("font-size", "1ex")
@@ -312,13 +338,13 @@ function buildVisualizationSVG(vis) {
 
     guides.append("line")
         .attr("x1", 160)
-        .attr("x2", 95)
+        .attr("x2", 110)
         .attr("y1", 25)
         .attr("y2", 74)
         .attr("stroke", "black");
 
     guides.append("circle")
-        .attr("cx", 95)
+        .attr("cx", 110)
         .attr("cy", 90)
         .attr("r", 16)
         .attr("fill", "none")
@@ -392,9 +418,9 @@ function updateDosageVis() {
     d3.selectAll(".max_text").each(function (d) { this.value = Math.min(+this.value, d[this.getAttribute("max_key")]); });
     d3.selectAll(".max_label").text(function (d) { return d[this.getAttribute("max_key")] + " ml"; });
 
-    d3.selectAll("image.before").attr("href", function (d) { return d.before_image; } );
-    d3.selectAll("image.spadning").attr("href", function (d) { return d.spadning_image; } );
-    d3.selectAll("image.after").attr("href", function (d) { return d.after_image; } );
+    d3.selectAll("image.before").attr("href", function (d) { return d.before_image; });
+    d3.selectAll("image.spadning").attr("href", function (d) { return d.spadning_image; });
+    d3.selectAll("image.after").attr("href", function (d) { return d.after_image; });
 
     var svg = d3.selectAll("svg");
 
