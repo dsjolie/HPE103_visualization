@@ -308,7 +308,7 @@ function buildVisualizationSVG(vis) {
         .style("font-size", "1ex")
         .text("? ml");
 
-    var guides = svg.append("g").classed("guides",true);
+    var guides = svg.append("g").classed("guides", true);
 
     appendMultilineText(guides, ["Styrka Före", "Inmatad av dig"], 62, 52);
     guides.append("line")
@@ -318,7 +318,7 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 90)
         .attr("stroke", "black");
 
-    appendMultilineText(guides, ["Styrka Före", "Automatiskt uträknad","baserat på Dos/Mängd Före"], 45, 117);
+    appendMultilineText(guides, ["Styrka Före", "Automatiskt uträknad", "baserat på Dos/Mängd Före"], 45, 117);
     guides.append("line")
         .attr("x1", 78)
         .attr("x2", 85)
@@ -464,6 +464,7 @@ function createSetting(vis, label, key, key2) {
     setting.append("input").attr("type", "range").classed("max_slider", true)
         .attr("max_key", max_key)
         .attr("value", d => d[key]).style("width", "80px").attr("max", function (d) { return d[max_key]; }).attr("min", 0)
+        .attr("step", function (d) { return (d[max_key] <= 5) ? 0.1 : 1; })
         .on("input", function (d) {
             d[key] = +this.value;
             updateDosageVis();
@@ -525,7 +526,7 @@ function updateDosageVis() {
         .attr("fill", function (d) { return getDosageColor(d.styrka_after / d.max_styrka); });
 
     svg.selectAll(".strength.after_calc")
-        .attr("fill", function (d) { return getDosageColor(d.dos_after / d.mangd_after / d.max_styrka); });
+        .attr("fill", function (d) { debugger; return getDosageColor(d.dos_after / d.mangd_after / d.max_styrka); });
 
     svg.selectAll(".strength.after_calc_from_before")
         .attr("fill", function (d) { return getDosageColor(d.dos / (d.mangd_fore + d.mangd_spadning) / d.max_styrka); });
