@@ -18,6 +18,11 @@ const before_containers = [
         "label": "injektionsflaska 45 ml",
         "volume": 45,
         "image": "images/Ampull-14.jpg"
+    },
+    {
+        "label": "torrsubstans (0 ml)",
+        "volume": 0,
+        "image": "images/Ampull-4.jpg"
     }
 ]
 
@@ -180,8 +185,10 @@ function buildVisualizationSVG(vis) {
     var before_g0 = svg.append("g")
         .attr("transform", "translate(20,0)");
     before_g0.append("image").classed("before", true)
-        .attr("href", d => d.before_image)
+        .attr("xlink:href", d => d.before_image)
         .attr("height", "100")
+        .attr("width", "100")
+        .attr("preserveAspectRatio","xMinYMid")
         .attr("x", "-10")
         .attr("y", "0");
     before_g0.append("line")
@@ -222,8 +229,10 @@ function buildVisualizationSVG(vis) {
     var spadning_g0 = svg.append("g")
         .attr("transform", "translate(0,110)");
     spadning_g0.append("image").classed("spadning", true)
-        .attr("href", d => d.spadning_image)
+        .attr("xlink:href", d => d.spadning_image)
         .attr("height", "110")
+        .attr("width", "100")
+        .attr("preserveAspectRatio","xMinYMid")
         .attr("x", "0")
         .attr("y", "-8");
     spadning_g0.append("line")
@@ -254,8 +263,10 @@ function buildVisualizationSVG(vis) {
     var after_g0 = svg.append("g");
     after_g0.attr("transform", "translate(200,60)");
     after_g0.append("image").classed("after", true)
-        .attr("href", d => d.after_image)
+        .attr("xlink:href", d => d.after_image)
         .attr("height", "100")
+        .attr("width", "100")
+        .attr("preserveAspectRatio","xMinYMid")
         .attr("x", "40");
 
     var after_g = after_g0.append("g");
@@ -502,9 +513,9 @@ function updateDosageVis() {
 
     var vol_bar = svg.selectAll(".volume.before")
         .attr("height", function (d) {
-            return before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1);
+            return (d.max_mangd_fore == 0) ? 0 : (before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1));
         })
-        .attr("y", function (d) { return 100 - before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1); });
+        .attr("y", function (d) { return 100 - ((d.max_mangd_fore == 0) ? 0 : (before_bar_max_height * Math.min(d.mangd_fore / d.max_mangd_fore, 1))); });
 
     var dos_bar = svg.selectAll(".dosage.before")
         .attr("height", function (d) {
@@ -526,7 +537,7 @@ function updateDosageVis() {
         .attr("fill", function (d) { return getDosageColor(d.styrka_after / d.max_styrka); });
 
     svg.selectAll(".strength.after_calc")
-        .attr("fill", function (d) { debugger; return getDosageColor(d.dos_after / d.mangd_after / d.max_styrka); });
+        .attr("fill", function (d) { return getDosageColor(d.dos_after / d.mangd_after / d.max_styrka); });
 
     svg.selectAll(".strength.after_calc_from_before")
         .attr("fill", function (d) { return getDosageColor(d.dos / (d.mangd_fore + d.mangd_spadning) / d.max_styrka); });
