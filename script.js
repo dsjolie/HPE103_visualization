@@ -337,7 +337,7 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 98)
         .attr("stroke", "black");
 
-    appendMultilineText(guides, ["Styrka Efter", "Automatiskt uträknad baserat på Före och Spädning"], 125, 230);
+    appendMultilineText(guides, ["Styrka Efter", "Automatiskt uträknad"], 125, 230);
     guides.append("line")
         .attr("x1", 150)
         .attr("x2", 140)
@@ -361,7 +361,7 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 158)
         .attr("stroke", "black");
 
-    appendMultilineText(guides, ["Automatiskt uträknad Styrka och Styrka Inmatad av dig", "skall vara samma (samma färg)"], 120, 10);
+    appendMultilineText(guides, ["Färg på Automatiskt uträknad Styrka och", "Styrka Inmatad av dig skall vara samma"], 120, 10);
     guides.append("line")
         .attr("x1", 160)
         .attr("x2", 110)
