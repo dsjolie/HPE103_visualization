@@ -94,9 +94,6 @@ var vis = d3.selectAll(".spad_vis")
         };
     });
 
-var width = 370;
-var height = 300;
-
 const volume_color = "hsl(220,100%,50%)";
 const dosage_color = "hsl(360,100%,50%)";
 
@@ -178,7 +175,7 @@ function createDosageVis(container) {
 function buildVisualizationSVG(vis) {
     var svg = vis.append("svg");
     svg.attr("width", "100%");
-    svg.attr("viewBox", "0 0 370 300");
+    svg.attr("viewBox", "0 0 370 240");
 
 
     // Before
