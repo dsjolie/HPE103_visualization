@@ -66,6 +66,11 @@ const after_containers = [
         "image": "images/Spruta-20ml.jpg"
     },
     {
+        "label": "påse 100 ml",
+        "volume": 100,
+        "image": "images/bag.jpg"
+    },
+    {
         "label": "påse 500 ml",
         "volume": 500,
         "image": "images/bag.jpg"
@@ -103,7 +108,14 @@ setInterval(doAnimations, 33);
 
 function createDosageVis(container) {
 
-    var vis = container.append("div").classed("visualization", true);
+    container.append("button")
+        .text("Visa visualisering")
+        .on("click", function () {
+            d3.selectAll("div.visualization").style("display","none");
+            d3.select(this.nextElementSibling).style("display","grid");
+        });
+    var vis = container.append("div").classed("visualization", true)
+        .style("display","none");
 
     var before = vis.append("div").classed("settings", true);
     before.append("h3").text("Före");
@@ -465,6 +477,7 @@ function createSetting(vis, label, key, key2) {
         .attr("max_key", max_key)
         .attr("value", d => d[key]).attr("size", 3)
         .on("change", function (d) {
+            this.value = this.value.replace(",",".");
             d[key] = +this.value;
             updateDosageVis();
             d3.select(this.parentNode).selectAll("input").nodes().forEach(function (n) { n.value = d[key]; })
