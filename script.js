@@ -25,12 +25,6 @@ const before_containers = [
         "image": "images/Ampull-14.jpg"
     },
     {
-        "label": "påse 100 ml",
-        "volume": 100,
-        "image": "images/bag.jpg"
-    },
-
-    {
         "label": "torrsubstans (0 ml)",
         "volume": 0,
         "image": "images/Torrsubstans.jpg"
@@ -52,6 +46,11 @@ const spadning_containers = [
         "label": "flaska 100 ml",
         "volume": 100,
         "image": "images/bottle.jpg"
+    },
+    {
+        "label": "påse 100 ml",
+        "volume": 100,
+        "image": "images/bag.jpg"
     },
     {
         "label": "påse 500 ml",
@@ -157,8 +156,8 @@ function createDosageVis(container) {
         .append("option").attr("value", d => d.volume).text(d => d.label);
 
 
-    createSetting(before, "Styrka", "styrka");
     createSetting(before, "Dos", "dos");
+    createSetting(before, "Styrka", "styrka");
     createSetting(before, "Mängd", "mangd_fore");
 
     var spadning = vis.append("div").classed("settings", true);
@@ -176,8 +175,8 @@ function createDosageVis(container) {
         .append("option").attr("value", d => d.volume).text(d => d.label);
 
 
-    spadning.append("div").append("label").text("Styrka: Inte relevant").style("width", "18ex");
     spadning.append("div").append("label").text("Dos: Inte relevant").style("width", "16ex");
+    spadning.append("div").append("label").text("Styrka: Inte relevant").style("width", "18ex");
     createSetting(spadning, "Mängd", "mangd_spadning");
 
     buildVisualizationSVG(vis);
@@ -196,8 +195,8 @@ function createDosageVis(container) {
         .selectAll("option").data(d => after_containers.map(function (c) { c.max_mangd_after = d.max_mangd_after; return c; })).enter()
         .append("option").attr("value", d => d.volume).text(d => d.label).attr("selected", function (d) { return (d.max_mangd_after == this.value) ? "" : undefined; });
 
-    createSetting(after, "Styrka", "styrka", "after");
     createSetting(after, "Dos", "dos", "after");
+    createSetting(after, "Styrka", "styrka", "after");
     createSetting(after, "Mängd", "mangd_after");
 
     vis.append("button").text("Visa/göm hjälp")
