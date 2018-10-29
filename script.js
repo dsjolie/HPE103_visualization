@@ -15,10 +15,21 @@ const before_containers = [
         "image": "images/Ampull-14.jpg"
     },
     {
+        "label": "spruta 20 ml",
+        "volume": 20,
+        "image": "images/Spruta-20ml.jpg"
+    },
+    {
         "label": "injektionsflaska 45 ml",
         "volume": 45,
         "image": "images/Ampull-14.jpg"
     },
+    {
+        "label": "påse 100 ml",
+        "volume": 100,
+        "image": "images/bag.jpg"
+    },
+
     {
         "label": "torrsubstans (0 ml)",
         "volume": 0,
@@ -102,6 +113,20 @@ var vis = d3.selectAll(".spad_vis")
 const volume_color = "hsl(220,100%,50%)";
 const dosage_color = "hsl(360,100%,50%)";
 
+var defs_svg = d3.select("div").append("svg").attr("height", "0px").attr("width", "0px");
+var strength_gradient = defs_svg.append("defs").append("linearGradient")
+    .attr("id", "strength_gradient")
+    .attr("x1", "0%")
+    .attr("x2", "0%")
+    .attr("y1", "0%")
+    .attr("y2", "100%");
+strength_gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("style", "stop-color:hsl(340,100%,70%);stop-opacity:1");
+strength_gradient.append("stop")
+    .attr("offset", "100%")
+    .attr("style", "stop-color:hsl(200,100%,70%);stop-opacity:1");
+
 createDosageVis(vis);
 
 setInterval(doAnimations, 33);
@@ -111,11 +136,11 @@ function createDosageVis(container) {
     container.append("button")
         .text("Visa visualisering")
         .on("click", function () {
-            d3.selectAll("div.visualization").style("display","none");
-            d3.select(this.nextElementSibling).style("display","grid");
+            d3.selectAll("div.visualization").style("display", "none");
+            d3.select(this.nextElementSibling).style("display", "grid");
         });
     var vis = container.append("div").classed("visualization", true)
-        .style("display","none");
+        .style("display", "none");
 
     var before = vis.append("div").classed("settings", true);
     before.append("h3").text("Före");
@@ -197,7 +222,7 @@ function buildVisualizationSVG(vis) {
         .attr("xlink:href", d => d.before_image)
         .attr("height", "100")
         .attr("width", "100")
-        .attr("preserveAspectRatio","xMinYMid")
+        .attr("preserveAspectRatio", "xMinYMid")
         .attr("x", "-10")
         .attr("y", "0");
     before_g0.append("line")
@@ -241,7 +266,7 @@ function buildVisualizationSVG(vis) {
         .attr("xlink:href", d => d.spadning_image)
         .attr("height", "110")
         .attr("width", "100")
-        .attr("preserveAspectRatio","xMinYMid")
+        .attr("preserveAspectRatio", "xMinYMid")
         .attr("x", "0")
         .attr("y", "-8");
     spadning_g0.append("line")
@@ -275,7 +300,7 @@ function buildVisualizationSVG(vis) {
         .attr("xlink:href", d => d.after_image)
         .attr("height", "100")
         .attr("width", "100")
-        .attr("preserveAspectRatio","xMinYMid")
+        .attr("preserveAspectRatio", "xMinYMid")
         .attr("x", "40");
 
     var after_g = after_g0.append("g");
@@ -415,19 +440,6 @@ function buildVisualizationSVG(vis) {
         .attr("y2", 163)
         .attr("stroke", "black");
 
-    var strength_gradient = svg.append("defs").append("linearGradient")
-        .attr("id", "strength_gradient")
-        .attr("x1", "0%")
-        .attr("x2", "0%")
-        .attr("y1", "0%")
-        .attr("y2", "100%");
-    strength_gradient.append("stop")
-        .attr("offset", "0%")
-        .attr("style", "stop-color:hsl(340,100%,70%);stop-opacity:1");
-    strength_gradient.append("stop")
-        .attr("offset", "100%")
-        .attr("style", "stop-color:hsl(200,100%,70%);stop-opacity:1");
-
     var strength_legend = svg.append("g")
         .attr("transform", "translate(300,30)");
 
@@ -437,6 +449,12 @@ function buildVisualizationSVG(vis) {
         .attr("width", 20)
         .attr("height", 150)
         .attr("fill", "url(#strength_gradient");
+
+    strength_legend.append("text")
+        .attr("x", -15)
+        .attr("y", -5)
+        .style("font-size", "1ex")
+        .text("Färgskala för Styrka");
 
     strength_legend.append("text")
         .attr("x", 22)
@@ -477,7 +495,7 @@ function createSetting(vis, label, key, key2) {
         .attr("max_key", max_key)
         .attr("value", d => d[key]).attr("size", 3)
         .on("change", function (d) {
-            this.value = this.value.replace(",",".");
+            this.value = this.value.replace(",", ".");
             d[key] = +this.value;
             updateDosageVis();
             d3.select(this.parentNode).selectAll("input").nodes().forEach(function (n) { n.value = d[key]; })
