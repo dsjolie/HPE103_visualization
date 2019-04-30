@@ -30,7 +30,7 @@ const before_containers = [
         "image": "images/Torrsubstans.jpg"
     },
     {
-        "label": "blandsaft",
+        "label": "blandsaft 500 ml",
         "volume": 500,
         "image": "images/blandsaft.jpg"
     }
@@ -61,6 +61,11 @@ const spadning_containers = [
         "label": "påse 500 ml",
         "volume": 500,
         "image": "images/bag.jpg"
+    },
+    {
+        "label": "vatten 1000 ml",
+        "volume": 1000,
+        "image": "images/water_bottle.png"
     }
 ]
 
@@ -91,7 +96,7 @@ const after_containers = [
         "image": "images/bag.jpg"
     },
     {
-        "label": "saftglas",
+        "label": "saftglas 300 ml",
         "volume": 300,
         "image": "images/saftglas.jpg"
     }
