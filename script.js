@@ -28,6 +28,11 @@ const before_containers = [
         "label": "torrsubstans (0 ml)",
         "volume": 0,
         "image": "images/Torrsubstans.jpg"
+    },
+    {
+        "label": "blandsaft",
+        "volume": 500,
+        "image": "images/blandsaft.jpg"
     }
 ]
 
@@ -84,6 +89,11 @@ const after_containers = [
         "label": "påse 500 ml",
         "volume": 500,
         "image": "images/bag.jpg"
+    },
+    {
+        "label": "saftglas",
+        "volume": 300,
+        "image": "images/saftglas.jpg"
     }
 ]
 
